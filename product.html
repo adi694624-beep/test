@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shampoo | HAIRX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <div class="container" id="pdp"></div>
+
+    <section class="section bg-paper">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">You may also like</span>
+          <h2>Complete your routine</h2>
+        </div>
+        <div class="product-grid" id="related"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/bottle.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    (function () {
+      var id = new URLSearchParams(location.search).get("id");
+      var p = HAIRX_findProduct(id) || HAIRX_PRODUCTS[0];
+      var concern = HAIRX_CONCERNS[p.concern];
+      var types = p.hairTypes.map(function (t) { return HAIRX_HAIR_TYPES[t]; }).join(", ");
+      var off = Math.round((1 - p.price / p.mrp) * 100);
+      var fmt = HAIRX_formatINR;
+
+      document.title = p.name + " Shampoo for " + concern.label + " | HAIRX";
+      var meta = document.createElement("meta");
+      meta.name = "description"; meta.content = p.short;
+      document.head.appendChild(meta);
+
+      var root = document.getElementById("pdp");
+      root.style.setProperty("--accent", p.color);
+      root.innerHTML =
+        '<div class="pdp">' +
+          '<div class="pdp-media">' + HAIRX_bottle(p) + "</div>" +
+          "<div>" +
+            '<div class="breadcrumb"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <a href="shop.html?concern=' + p.concern + '">' + concern.label + "</a></div>" +
+            '<span class="concern-chip"><i style="background:' + p.color + '"></i>For ' + concern.label + "</span>" +
+            "<h1>" + p.name + "</h1>" +
+            '<div class="rating">★★★★★ ' + p.rating + ' <span class="muted">· ' + p.reviews + " reviews</span></div>" +
+            '<p class="muted" style="font-size:1.05rem;margin-top:14px">' + p.description + "</p>" +
+            '<div class="price-row"><span class="price">' + fmt(p.price) + '</span> <s class="muted">' + fmt(p.mrp) + '</s><span class="save-pill">' + off + "% OFF</span></div>" +
+            '<p class="small muted">' + p.size + " · Inclusive of all taxes</p>" +
+            '<ul class="pdp-benefits">' + p.benefits.map(function (b) { return "<li>" + b + "</li>"; }).join("") + "</ul>" +
+            '<div class="buy-row">' +
+              '<div class="qty"><button type="button" data-q="-1" aria-label="Decrease">−</button><input id="qty" type="number" min="1" max="10" value="1" aria-label="Quantity"><button type="button" data-q="1" aria-label="Increase">+</button></div>' +
+              '<button class="btn btn-dark" id="add">Add to cart</button>' +
+            "</div>" +
+            '<button class="btn btn-outline btn-block" id="buy-now">Buy now</button>' +
+            '<div class="perks" style="margin-top:22px">' +
+              "<div><b>Free shipping</b>Above " + fmt(HAIRX_CONFIG.freeShippingAbove) + "</div>" +
+              "<div><b>Cash on Delivery</b>Available</div>" +
+              "<div><b>UPI &amp; Cards</b>Secure payment</div>" +
+            "</div>" +
+            '<div class="accordion">' +
+              '<details open><summary>Key ingredients</summary><div class="acc-body"><div class="ingredient-list">' +
+                p.ingredients.map(function (i) { return "<div><b>" + i.name + "</b><span>" + i.role + "</span></div>"; }).join("") +
+              '</div><p class="small" style="margin-top:14px">Colour from: <b>' + p.pigment + "</b>, a natural pigment, not a synthetic dye.</p></div></details>" +
+              '<details><summary>How to use</summary><div class="acc-body"><ol class="steps">' +
+                "<li>Wet your hair thoroughly with lukewarm water. Apply on damp hair.</li>" +
+                "<li>Massage a coin-sized amount into your scalp with your fingertips for 60 seconds.</li>" +
+                "<li>Leave it on for 1–2 minutes so the actives can work.</li>" +
+                "<li>Rinse well. Use 3–4 times a week, or daily if needed.</li>" +
+              "</ol></div></details>" +
+              '<details><summary>Suitable for</summary><div class="acc-body">Hair types: ' + types + ". Made for men's scalps. Safe for colour-treated hair.</div></details>" +
+              '<details><summary>Free from</summary><div class="acc-body">Sulphates (SLS/SLES), parabens, silicones, mineral oil, phthalates, formaldehyde-releasers and artificial dyes. Cruelty-free.</div></details>' +
+              '<details><summary>Lab test report</summary><div class="acc-body">pH, heavy-metal, microbial and dermatological test results for this formula. <a href="lab-reports.html#' + p.id + '">View report →</a></div></details>' +
+            "</div>" +
+          "</div>" +
+        "</div>";
+
+      var qty = document.getElementById("qty");
+      root.addEventListener("click", function (e) {
+        var q = e.target.getAttribute("data-q");
+        if (q) qty.value = Math.min(10, Math.max(1, (+qty.value || 1) + +q));
+      });
+      document.getElementById("add").addEventListener("click", function () { HAIRX_cart.add(p.id, Math.max(1, +qty.value || 1)); });
+      document.getElementById("buy-now").addEventListener("click", function () {
+        HAIRX_cart.add(p.id, Math.max(1, +qty.value || 1));
+        location.href = "checkout.html";
+      });
+
+      var related = HAIRX_PRODUCTS.filter(function (x) { return x.id !== p.id; })
+        .sort(function (a, b) { return (b.bestseller - a.bestseller) || (b.rating - a.rating); }).slice(0, 4);
+      document.getElementById("related").innerHTML = related.map(HAIRX_productCard).join("");
+    })();
+  </script>
+</body>
+</html>

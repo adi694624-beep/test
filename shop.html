@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop All Shampoos | HAIRX</title>
+  <meta name="description" content="Shop HAIRX natural shampoos for men. Filter by hair type and scalp concern: dandruff, dry scalp, oily scalp, hair fall, frizz and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">The collection</span>
+        <h1>Find your formula</h1>
+        <p>Filter by your hair type and scalp concern. Each colour is a different solution.</p>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom:96px">
+      <div class="shop-layout">
+        <aside class="filters" id="filters" aria-label="Filters">
+          <div class="filter-group">
+            <h4>Scalp &amp; hair concern</h4>
+            <div id="f-concern"></div>
+          </div>
+          <div class="filter-group">
+            <h4>Hair type</h4>
+            <div id="f-type"></div>
+          </div>
+          <div class="filter-group">
+            <h4>Price</h4>
+            <label class="filter-option"><input type="radio" name="price" value="all" checked> All prices</label>
+            <label class="filter-option"><input type="radio" name="price" value="lt2300"> Under ₹2,300</label>
+            <label class="filter-option"><input type="radio" name="price" value="gte2300"> ₹2,300 and above</label>
+          </div>
+          <div class="filter-group">
+            <button class="link-btn" id="clear-filters" type="button">Clear all filters</button>
+          </div>
+        </aside>
+
+        <div>
+          <div class="shop-toolbar">
+            <div>
+              <button class="btn btn-outline filter-toggle" id="filter-toggle" type="button">Filters</button>
+              <span class="muted small" id="result-count"></span>
+            </div>
+            <label class="small">Sort by
+              <select id="sort">
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+                <option value="rating">Top rated</option>
+              </select>
+            </label>
+          </div>
+          <div class="product-grid" id="grid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/bottle.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    (function () {
+      var C = HAIRX_CONCERNS, T = HAIRX_HAIR_TYPES;
+      var params = new URLSearchParams(location.search);
+      var preConcern = params.get("concern"), preType = params.get("type");
+
+      document.getElementById("f-concern").innerHTML = Object.keys(C).map(function (k) {
+        return '<label class="filter-option"><input type="checkbox" name="concern" value="' + k + '"' + (k === preConcern ? " checked" : "") + '><i style="background:' + C[k].color + '"></i>' + C[k].label + "</label>";
+      }).join("");
+      document.getElementById("f-type").innerHTML = Object.keys(T).map(function (k) {
+        return '<label class="filter-option"><input type="checkbox" name="type" value="' + k + '"' + (k === preType ? " checked" : "") + "> " + T[k] + "</label>";
+      }).join("");
+
+      function checked(name) {
+        return Array.prototype.map.call(document.querySelectorAll('input[name="' + name + '"]:checked'), function (i) { return i.value; });
+      }
+
+      function render() {
+        var concerns = checked("concern"), types = checked("type"), price = checked("price")[0];
+        var list = HAIRX_PRODUCTS.filter(function (p) {
+          if (concerns.length && concerns.indexOf(p.concern) === -1) return false;
+          if (types.length && !types.some(function (t) { return p.hairTypes.indexOf(t) !== -1; })) return false;
+          if (price === "lt2300" && p.price >= 2300) return false;
+          if (price === "gte2300" && p.price < 2300) return false;
+          return true;
+        });
+        var sort = document.getElementById("sort").value;
+        if (sort === "price-asc") list.sort(function (a, b) { return a.price - b.price; });
+        if (sort === "price-desc") list.sort(function (a, b) { return b.price - a.price; });
+        if (sort === "rating") list.sort(function (a, b) { return b.rating - a.rating; });
+
+        document.getElementById("result-count").textContent = list.length + (list.length === 1 ? " shampoo" : " shampoos");
+        document.getElementById("grid").innerHTML = list.length ? list.map(HAIRX_productCard).join("") :
+          '<div class="empty-state" style="grid-column:1/-1"><h3>No exact match</h3><p class="muted">Try removing a filter, or let our quiz find your formula.</p><a class="btn btn-dark" href="quiz.html">Take the hair quiz</a></div>';
+      }
+
+      document.getElementById("filters").addEventListener("change", render);
+      document.getElementById("sort").addEventListener("change", render);
+      document.getElementById("clear-filters").addEventListener("click", function () {
+        document.querySelectorAll('#filters input[type="checkbox"]').forEach(function (i) { i.checked = false; });
+        document.querySelector('input[name="price"][value="all"]').checked = true;
+        render();
+      });
+      document.getElementById("filter-toggle").addEventListener("click", function () {
+        document.getElementById("filters").classList.toggle("open");
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>

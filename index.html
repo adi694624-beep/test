@@ -3,12 +3,268 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Test Deployment</title>
-  <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: system-ui, sans-serif; background: #111; color: #eee; }
-  </style>
+  <title>HAIRX — Natural Shampoos for Men | Rooted in Nature</title>
+  <meta name="description" content="HAIRX makes premium, natural, colour-coded shampoos for men — one formula for every scalp concern: dandruff, dry scalp, oily scalp, hair fall, frizz and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231F3A2C'/%3E%3Cg transform='translate(20 20)' fill='%23A9C2A6'%3E%3Cpath d='M0-14C5-7 5 7 0 14C-5 7-5-7 0-14Z' transform='rotate(42)'/%3E%3Cpath d='M0-14C5-7 5 7 0 14C-5 7-5-7 0-14Z' transform='rotate(-42)'/%3E%3C/g%3E%3C/svg%3E">
 </head>
 <body>
-  <h1>Vercel deployment works 🎉</h1>
+  <div id="site-header"></div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <span class="eyebrow">Premium natural haircare for men</span>
+          <h1>Your scalp is unique.<br>Your shampoo should be <em>too.</em></h1>
+          <p class="hero-lead">Eight colour-coded formulas, each built for one concern: dandruff, dry scalp, oily roots, hair fall and more. Made from plant extracts, with nothing harsh.</p>
+          <div class="hero-actions">
+            <a class="btn btn-dark" href="quiz.html">Find my shampoo</a>
+            <a class="btn btn-outline" href="shop.html">Shop all</a>
+          </div>
+          <div class="hero-trust">
+            <div><strong>0%</strong>Sulphates &amp; parabens</div>
+            <div><strong>8</strong>Targeted formulas</div>
+            <div><strong>pH 5.5</strong>Scalp-balanced</div>
+          </div>
+        </div>
+        <div class="hero-bottles reveal" id="hero-bottles"><div class="hero-ring"></div></div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>No sulphates</span><span>No parabens</span><span>No silicones</span><span>Colours from nature</span><span>Dermatologically tested</span><span>Cruelty-free</span><span>Made in India</span>
+        <span>No sulphates</span><span>No parabens</span><span>No silicones</span><span>Colours from nature</span><span>Dermatologically tested</span><span>Cruelty-free</span><span>Made in India</span>
+      </div>
+    </div>
+
+    <!-- SHOP BY CONCERN -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Shop by concern</span>
+          <h2>One problem. One colour. One solution.</h2>
+          <p>Every HAIRX formula has its own signature colour, so you always know which bottle is yours.</p>
+        </div>
+        <div class="concern-grid" id="concern-grid"></div>
+      </div>
+    </section>
+
+    <!-- BESTSELLERS -->
+    <section class="section bg-paper">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Bestsellers</span>
+          <h2>The formulas men swear by</h2>
+        </div>
+        <div class="product-grid" id="bestsellers"></div>
+        <p style="text-align:center;margin-top:40px"><a class="btn btn-outline" href="shop.html">View all shampoos</a></p>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="section bg-forest">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The HAIRX difference</span>
+          <h2>Clean science, rooted in nature</h2>
+          <p>We combine Ayurvedic botanicals with modern plant-derived actives. Every ingredient has a job to do.</p>
+        </div>
+        <div class="benefit-grid reveal">
+          <div class="benefit">
+            <div class="benefit-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19c0-8 6-14 15-15-1 9-7 15-15 15Z"/><path d="M5 19 14 10"/></svg></div>
+            <h3>Plant-powered</h3>
+            <p>Botanical actives like neem, bhringraj, argan and tea tree, picked for each scalp concern.</p>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg></div>
+            <h3>Nothing harsh</h3>
+            <p>Free from sulphates, parabens, silicones, mineral oil and artificial dyes.</p>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 1.7 3h10.6A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 14h9"/></svg></div>
+            <h3>Lab tested</h3>
+            <p>Every batch is tested for pH, heavy metals, microbes and skin safety. <a href="lab-reports.html">See reports</a></p>
+          </div>
+          <div class="benefit">
+            <div class="benefit-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4.4-7 8-7s7 2.5 8 7"/></svg></div>
+            <h3>Made for men</h3>
+            <p>Formulated for men's scalps, which produce more oil, sweat and buildup.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLOUR STORY -->
+    <section class="section">
+      <div class="container split">
+        <div class="reveal">
+          <span class="eyebrow">Colours from nature</span>
+          <h2>Our colours aren't dyes. They're ingredients.</h2>
+          <p class="muted">Most shampoos get their colour from synthetic dyes. Every HAIRX colour comes from a natural pigment that also helps your scalp. The blue in Hydra Calm is spirulina, an antioxidant. The red in Root Strength comes from beetroot.</p>
+          <p class="muted">So the colour tells you what's inside, and what it's for.</p>
+          <a class="btn btn-dark" href="quiz.html" style="margin-top:10px">Which colour am I?</a>
+        </div>
+        <div class="swatch-list reveal" id="swatches"></div>
+      </div>
+    </section>
+
+    <!-- COMPARISON -->
+    <section class="section bg-paper" id="compare">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Why switch</span>
+          <h2>HAIRX vs. typical chemical shampoos</h2>
+          <p>Many mass-market shampoos depend on harsh chemicals that strip, irritate and build up over time. Here's what we use instead.</p>
+        </div>
+        <div class="table-wrap reveal">
+          <table class="compare-table">
+            <thead>
+              <tr><th>Ingredient type</th><th>Typical chemical shampoo</th><th class="us">HAIRX</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ingredient">Cleansing agent<small>What makes it foam</small></td>
+                <td data-label="Typical shampoo"><span class="no">✕ SLS / SLES sulphates</span><br><span class="muted small">Strip natural oils, which can cause dryness, itching and rebound oiliness</span></td>
+                <td class="us" data-label="HAIRX"><span class="yes">✓ Coconut &amp; sugar-derived cleansers</span><br><span class="muted small">Clean gently while keeping the scalp barrier intact</span></td>
+              </tr>
+              <tr>
+                <td class="ingredient">Preservatives<small>Keep the bottle fresh</small></td>
+                <td data-label="Typical shampoo"><span class="no">✕ Parabens, formaldehyde-releasers</span><br><span class="muted small">Linked to irritation and sensitisation</span></td>
+                <td class="us" data-label="HAIRX"><span class="yes">✓ Gentle, skin-safe preservation</span><br><span class="muted small">Plant-derived systems, tested for safety</span></td>
+              </tr>
+              <tr>
+                <td class="ingredient">Shine &amp; smoothness</td>
+                <td data-label="Typical shampoo"><span class="no">✕ Heavy silicones (dimethicone)</span><br><span class="muted small">Coat hair, build up and weigh it down over time</span></td>
+                <td class="us" data-label="HAIRX"><span class="yes">✓ Argan, flaxseed, shea</span><br><span class="muted small">Real nourishment that rinses clean</span></td>
+              </tr>
+              <tr>
+                <td class="ingredient">Colour</td>
+                <td data-label="Typical shampoo"><span class="no">✕ Synthetic dyes (CI numbers)</span><br><span class="muted small">Only there for looks</span></td>
+                <td class="us" data-label="HAIRX"><span class="yes">✓ Spirulina, beetroot, turmeric, charcoal</span><br><span class="muted small">Pigments that are also actives</span></td>
+              </tr>
+              <tr>
+                <td class="ingredient">Fragrance</td>
+                <td data-label="Typical shampoo"><span class="no">✕ Synthetic perfume, phthalates</span><br><span class="muted small">Common cause of scalp irritation</span></td>
+                <td class="us" data-label="HAIRX"><span class="yes">✓ Essential oils, or fragrance-free</span><br><span class="muted small">Pure Soothe has no added fragrance at all</span></td>
+              </tr>
+              <tr>
+                <td class="ingredient">Conditioning base</td>
+                <td data-label="Typical shampoo"><span class="no">✕ Mineral oil, petrolatum</span><br><span class="muted small">Petroleum by-products that can clog follicles</span></td>
+                <td class="us" data-label="HAIRX"><span class="yes">✓ Aloe, plant glycerin, oat</span><br><span class="muted small">Hydrate without clogging</span></td>
+              </tr>
+              <tr>
+                <td class="ingredient">One formula for all?</td>
+                <td data-label="Typical shampoo"><span class="no">✕ Mostly one-size-fits-all</span></td>
+                <td class="us" data-label="HAIRX"><span class="yes">✓ 8 formulas, one per concern</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAB STRIP -->
+    <section class="section-tight bg-sage">
+      <div class="container">
+        <div class="badge-strip">
+          <div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>Dermatologically tested</div>
+          <div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 1.7 3h10.6A2 2 0 0 0 19 18l-5-9V3"/></svg>Heavy-metal screened</div>
+          <div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>pH balanced 5.0 – 5.5</div>
+          <div><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 6.5-7 11-7 11Z"/></svg>Cruelty-free</div>
+          <div><a class="link-btn" href="lab-reports.html">View lab reports →</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS (sample reviews — replace with real customer reviews before launch) -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Real results</span>
+          <h2>What men are saying</h2>
+        </div>
+        <div class="testimonial-grid reveal">
+          <article class="testimonial">
+            <div class="stars">★★★★★</div>
+            <blockquote>"I've had dandruff since college and tried everything. Two weeks on Flake Defense and my black shirts are finally flake-free."</blockquote>
+            <footer><div class="avatar" style="background:#14877C">RK</div><div>Rohan K.<span>Flake Defense · Bengaluru</span></div></footer>
+          </article>
+          <article class="testimonial">
+            <div class="stars">★★★★★</div>
+            <blockquote>"My hair used to look greasy by 4pm. Clarify Balance keeps it fresh into the evening, and it doesn't dry my hair out."</blockquote>
+            <footer><div class="avatar" style="background:#7BA428">AS</div><div>Arjun S.<span>Clarify Balance · Mumbai</span></div></footer>
+          </article>
+          <article class="testimonial">
+            <div class="stars">★★★★★</div>
+            <blockquote>"I noticed less hair in the drain within a month. It feels premium, smells great, and the colour coding is genius."</blockquote>
+            <footer><div class="avatar" style="background:#9E2F3A">VM</div><div>Vikram M.<span>Root Strength · Delhi</span></div></footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section-tight" style="padding-bottom:96px">
+      <div class="container">
+        <div class="cta-band reveal">
+          <div>
+            <span class="eyebrow" style="color:var(--sage)">60-second hair quiz</span>
+            <h2>Not sure which colour is yours?</h2>
+            <p>Answer 6 quick questions about your scalp and hair, and we'll match you with the right HAIRX formula.</p>
+          </div>
+          <a class="btn btn-light" href="quiz.html">Take the quiz</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/bottle.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    (function () {
+      var P = HAIRX_PRODUCTS, C = HAIRX_CONCERNS;
+      var blurbs = {
+        "dry-scalp": "Tight, itchy, flaky", "oily-scalp": "Greasy roots, flat hair", "frizzy": "Puffy, unruly, curly",
+        "dandruff": "White flakes, itch", "hair-fall": "Breakage and shedding", "thinning": "Fine, low-volume hair",
+        "sensitive": "Redness and reactions", "sweat": "Gym, sweat and odour"
+      };
+
+      // Hero bottles
+      var hero = document.getElementById("hero-bottles");
+      var picks = ["clarify-balance", "hydra-calm", "root-strength", "flake-defense", "smooth-tame"];
+      var cls = ["b-back", "b-side", "", "b-side", "b-back"];
+      picks.forEach(function (id, i) {
+        var wrap = document.createElement("div");
+        wrap.innerHTML = HAIRX_bottle(HAIRX_findProduct(id));
+        var svg = wrap.firstChild;
+        if (cls[i]) svg.classList.add(cls[i]);
+        hero.appendChild(svg);
+      });
+
+      // Concern tiles
+      document.getElementById("concern-grid").innerHTML = Object.keys(C).map(function (k) {
+        return '<a class="concern-tile" style="--accent:' + C[k].color + '" href="shop.html?concern=' + k + '">' +
+          '<div class="concern-dot"></div><div><h3>' + C[k].label + "</h3><p>" + blurbs[k] + '</p><div class="arrow">Shop →</div></div></a>';
+      }).join("");
+
+      // Bestsellers
+      document.getElementById("bestsellers").innerHTML = P.filter(function (p) { return p.bestseller; }).map(HAIRX_productCard).join("");
+
+      // Swatches
+      document.getElementById("swatches").innerHTML = P.filter(function (p) { return p.id !== "curl-define"; }).map(function (p) {
+        return '<a class="swatch" href="product.html?id=' + p.id + '"><i style="background:' + p.color + '"></i><div><b>' + p.name + "</b><span>" + p.pigment + "</span></div></a>";
+      }).join("");
+    })();
+  </script>
 </body>
 </html>

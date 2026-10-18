@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Cart | HAIRX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <section class="page-hero" style="padding-bottom:28px">
+      <h1>Your cart</h1>
+    </section>
+    <div id="cart"></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/bottle.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    (function () {
+      var el = document.getElementById("cart"), fmt = HAIRX_formatINR, CFG = HAIRX_CONFIG;
+
+      function render() {
+        var t = HAIRX_cart.totals();
+        if (!t.lines.length) {
+          el.innerHTML = '<div class="empty-state" style="margin-bottom:96px"><h3>Your cart is empty</h3><p class="muted">Find the formula made for your scalp.</p>' +
+            '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn btn-dark" href="shop.html">Shop shampoos</a><a class="btn btn-outline" href="quiz.html">Take the quiz</a></div></div>';
+          return;
+        }
+        var left = CFG.freeShippingAbove - t.subtotal;
+        el.innerHTML = '<div class="cart-layout"><div>' +
+          t.lines.map(function (l) {
+            var p = l.product;
+            return '<div class="cart-line" style="--accent:' + p.color + '">' +
+              '<a class="thumb" href="product.html?id=' + p.id + '">' + HAIRX_bottle(p) + "</a>" +
+              "<div><h3>" + p.name + '</h3><div class="muted small">' + HAIRX_CONCERNS[p.concern].label + " · " + p.size + "</div>" +
+              '<div class="small" style="margin-top:6px">' + fmt(p.price) + ' <s class="muted">' + fmt(p.mrp) + "</s></div></div>" +
+              '<div class="line-right">' +
+                '<div class="qty"><button data-dec="' + p.id + '" aria-label="Decrease">−</button><input value="' + l.qty + '" readonly aria-label="Quantity"><button data-inc="' + p.id + '" aria-label="Increase">+</button></div>' +
+                "<b>" + fmt(l.total) + "</b>" +
+                '<button class="link-btn" data-remove="' + p.id + '">Remove</button>' +
+              "</div></div>";
+          }).join("") +
+          '<a class="link-btn" href="shop.html">← Continue shopping</a>' +
+          "</div>" +
+          '<aside class="summary"><h3>Order summary</h3>' +
+            (left > 0 ? '<div class="ship-bar">Add <b>' + fmt(left) + "</b> more for free shipping</div>" : '<div class="ship-bar">You get <b>free shipping</b> on this order</div>') +
+            '<div class="sum-row"><span>Subtotal</span><span>' + fmt(t.subtotal) + "</span></div>" +
+            '<div class="sum-row save"><span>You save</span><span>−' + fmt(t.savings) + "</span></div>" +
+            '<div class="sum-row"><span>Shipping</span><span>' + (t.shipping ? fmt(t.shipping) : "FREE") + "</span></div>" +
+            '<div class="sum-row total"><span>Total</span><span>' + fmt(t.total) + "</span></div>" +
+            '<a class="btn btn-dark btn-block" href="checkout.html" style="margin-top:18px">Proceed to checkout</a>' +
+            '<p class="small muted" style="text-align:center;margin:14px 0 0">UPI · Cards · Net Banking · Cash on Delivery</p>' +
+          "</aside></div>";
+      }
+
+      el.addEventListener("click", function (e) {
+        var b = e.target.closest("button");
+        if (!b) return;
+        var line = function (id) { return HAIRX_cart.items().find(function (l) { return l.id === id; }); };
+        if (b.dataset.inc) HAIRX_cart.setQty(b.dataset.inc, Math.min(10, line(b.dataset.inc).qty + 1));
+        if (b.dataset.dec) HAIRX_cart.setQty(b.dataset.dec, line(b.dataset.dec).qty - 1);
+        if (b.dataset.remove) HAIRX_cart.remove(b.dataset.remove);
+        render();
+      });
+      render();
+    })();
+  </script>
+</body>
+</html>

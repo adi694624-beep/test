@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lab Test Reports | HAIRX</title>
+  <meta name="description" content="HAIRX publishes lab test reports for every shampoo: pH, heavy metals, microbial safety, sulphate and paraben screening, and dermatological testing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Transparency</span>
+        <h1>Lab test reports</h1>
+        <p>We don't just say "natural" and "safe". We test every formula and publish the results, so you can see what's in your bottle and what isn't.</p>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom:40px">
+      <!-- Replace the sample values in REPORTS below with the figures from your accredited lab certificates,
+           and link each `pdf` to the real report file (e.g. reports/hydra-calm.pdf). Then remove this notice. -->
+      <div class="notice"><b>Sample report format:</b> the values below are placeholders showing how reports will appear. Certified results from an accredited lab will be published here.</div>
+
+      <div class="benefit-grid" style="margin-bottom:56px">
+        <div class="benefit"><div class="benefit-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></div><h3>pH balance</h3><p>Matched to the scalp's natural pH of 4.5–5.5</p></div>
+        <div class="benefit"><div class="benefit-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 1.7 3h10.6A2 2 0 0 0 19 18l-5-9V3"/></svg></div><h3>Heavy metals</h3><p>Lead, arsenic and mercury screened against BIS limits</p></div>
+        <div class="benefit"><div class="benefit-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Microbial safety</h3><p>Total count and harmful pathogens tested</p></div>
+        <div class="benefit"><div class="benefit-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></div><h3>Skin safety</h3><p>Dermatological patch test on human volunteers</p></div>
+      </div>
+
+      <div class="report-grid" id="reports"></div>
+    </section>
+
+    <section class="section-tight" style="padding-bottom:96px">
+      <div class="container" style="text-align:center">
+        <p class="muted">Want the full certificate for a batch? Write to us and we'll send it.</p>
+        <a class="btn btn-dark" id="request-report" href="#">Request a full report</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/bottle.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    (function () {
+      // SAMPLE DATA: replace with real lab values per product.
+      var PH = { "hydra-calm": "5.4", "clarify-balance": "5.1", "smooth-tame": "5.3", "flake-defense": "5.0",
+                 "root-strength": "5.2", "volume-rise": "5.3", "pure-soothe": "5.5", "daily-fresh": "5.2", "curl-define": "5.4" };
+
+      document.getElementById("reports").innerHTML = HAIRX_PRODUCTS.map(function (p, i) {
+        var rows = [
+          ["pH (10% solution)", PH[p.id], "4.5 – 6.0"],
+          ["Lead (Pb)", "&lt; 1 ppm", "≤ 20 ppm"],
+          ["Arsenic (As)", "&lt; 0.5 ppm", "≤ 2 ppm"],
+          ["Mercury (Hg)", "Not detected", "≤ 1 ppm"],
+          ["Total microbial count", "&lt; 10 cfu/g", "≤ 1000 cfu/g"],
+          ["Pathogens (E. coli, S. aureus, P. aeruginosa)", "Absent", "Absent"],
+          ["SLS / SLES", "Not detected", "—"],
+          ["Parabens", "Not detected", "—"],
+          ["Dermatological patch test", "Non-irritant", "—"]
+        ];
+        return '<article class="report" id="' + p.id + '" style="--accent:' + p.color + '">' +
+          '<div class="report-head">' + HAIRX_bottle(p) +
+            '<div><h3>' + p.name + '</h3><div class="muted">Sample report · Batch HX-' + (2401 + i) + " · " + HAIRX_CONCERNS[p.concern].label + "</div></div>" +
+          "</div>" +
+          "<table><thead><tr><th>Parameter</th><th>Result</th><th>Limit</th><th></th></tr></thead><tbody>" +
+          rows.map(function (r) { return "<tr><td>" + r[0] + "</td><td><b>" + r[1] + "</b></td><td class='muted'>" + r[2] + "</td><td class='pass'>✓</td></tr>"; }).join("") +
+          "</tbody></table>" +
+          '<div class="report-foot"><span>Testing lab: to be added</span><span class="pass">All parameters pass</span></div>' +
+        "</article>";
+      }).join("");
+
+      document.getElementById("request-report").href = "mailto:" + HAIRX_CONFIG.email + "?subject=" + encodeURIComponent("Lab report request");
+
+      if (location.hash) {
+        var t = document.querySelector(location.hash);
+        if (t) setTimeout(function () { t.scrollIntoView({ behavior: "smooth", block: "start" }); }, 100);
+      }
+    })();
+  </script>
+</body>
+</html>

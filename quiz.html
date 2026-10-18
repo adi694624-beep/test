@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hair Quiz: Find Your Perfect Shampoo | HAIRX</title>
+  <meta name="description" content="Answer 6 quick questions about your scalp and hair, and HAIRX will match you with the right natural shampoo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">60-second hair quiz</span>
+        <h1>Find your colour</h1>
+        <p>Six questions about your scalp, hair and lifestyle. We'll match you with the right HAIRX formula.</p>
+      </div>
+    </section>
+    <section class="container" style="padding-bottom:96px">
+      <div class="quiz-shell" id="quiz"></div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/bottle.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script>
+    (function () {
+      // Each answer adds points to one or more concerns. `type` records hair type.
+      var QUESTIONS = [
+        {
+          q: "How does your scalp feel by the end of the day?",
+          options: [
+            { t: "Tight and itchy", s: "Feels dry, sometimes rough", pts: { "dry-scalp": 3 } },
+            { t: "Greasy", s: "Roots look oily by evening", pts: { "oily-scalp": 3 } },
+            { t: "Itchy with flakes", s: "I keep scratching", pts: { "dandruff": 3 } },
+            { t: "Red or burning", s: "Easily irritated", pts: { "sensitive": 3 } },
+            { t: "Sweaty", s: "Especially after a workout", pts: { "sweat": 3 } },
+            { t: "Pretty normal", s: "No real issues", pts: {} }
+          ]
+        },
+        {
+          q: "What's your biggest hair worry right now?",
+          options: [
+            { t: "Dandruff", s: "White flakes on my shoulders", pts: { "dandruff": 4 } },
+            { t: "Hair fall", s: "Too much hair in the shower or comb", pts: { "hair-fall": 4 } },
+            { t: "Thinning", s: "My hair looks flat and sparse", pts: { "thinning": 4 } },
+            { t: "Frizz", s: "Puffy, hard to control", pts: { "frizzy": 4 } },
+            { t: "Oily hair", s: "Need to wash every day", pts: { "oily-scalp": 4 } },
+            { t: "Dry, rough hair", s: "Feels like straw", pts: { "dry-scalp": 3, "frizzy": 1 } }
+          ]
+        },
+        {
+          q: "What's your hair type?",
+          options: [
+            { t: "Straight", s: "Lies flat", type: "straight", pts: {} },
+            { t: "Wavy", s: "Loose S-shaped bends", type: "wavy", pts: { "frizzy": 1 } },
+            { t: "Curly", s: "Defined curls or coils", type: "curly", pts: { "frizzy": 2 } },
+            { t: "Thick / coarse", s: "Dense, strong strands", type: "thick", pts: { "frizzy": 1 } },
+            { t: "Fine / thin", s: "Soft, low volume", type: "fine", pts: { "thinning": 1 } }
+          ]
+        },
+        {
+          q: "Do you notice flakes?",
+          options: [
+            { t: "Yes, white or yellowish flakes", s: "Visible on clothes", pts: { "dandruff": 3 } },
+            { t: "Small, dry flakes", s: "Mostly after washing", pts: { "dry-scalp": 3 } },
+            { t: "No flakes", s: "", pts: { "oily-scalp": 1 } }
+          ]
+        },
+        {
+          q: "What does a typical day look like?",
+          options: [
+            { t: "Gym or sports every day", s: "Lots of sweat", pts: { "sweat": 3, "oily-scalp": 1 } },
+            { t: "Outdoors and commuting", s: "Sun, dust and pollution", pts: { "sweat": 1, "oily-scalp": 1, "hair-fall": 1 } },
+            { t: "Mostly indoors in AC", s: "Dry air all day", pts: { "dry-scalp": 2 } },
+            { t: "High stress, little sleep", s: "Busy schedule", pts: { "hair-fall": 2, "thinning": 1 } }
+          ]
+        },
+        {
+          q: "How does your scalp react to new products?",
+          options: [
+            { t: "Often irritated", s: "Itch, redness or burning", pts: { "sensitive": 4 } },
+            { t: "Sometimes", s: "Depends on the product", pts: { "sensitive": 1 } },
+            { t: "Never", s: "My scalp handles anything", pts: {} }
+          ]
+        }
+      ];
+
+      var answers = [], step = 0;
+      var el = document.getElementById("quiz");
+
+      function renderQuestion() {
+        var Q = QUESTIONS[step];
+        el.innerHTML =
+          '<div class="quiz-progress"><span style="width:' + (step / QUESTIONS.length * 100) + '%"></span></div>' +
+          '<div class="quiz-step-label">Question ' + (step + 1) + " of " + QUESTIONS.length + "</div>" +
+          '<h2 class="quiz-q">' + Q.q + "</h2>" +
+          '<div class="quiz-options">' + Q.options.map(function (o, i) {
+            return '<button type="button" class="quiz-option' + (answers[step] === i ? " selected" : "") + '" data-i="' + i + '"><b>' + o.t + "</b>" + (o.s ? "<span>" + o.s + "</span>" : "") + "</button>";
+          }).join("") + "</div>" +
+          '<div class="quiz-nav">' +
+            (step > 0 ? '<button class="btn btn-outline" type="button" id="back">Back</button>' : "<span></span>") +
+            '<span class="muted small" style="align-self:center">Pick one to continue</span>' +
+          "</div>";
+        requestAnimationFrame(function () {
+          var bar = el.querySelector(".quiz-progress span");
+          if (bar) bar.style.width = ((step + 1) / QUESTIONS.length * 100) + "%";
+        });
+      }
+
+      el.addEventListener("click", function (e) {
+        var opt = e.target.closest(".quiz-option");
+        if (opt) {
+          answers[step] = +opt.getAttribute("data-i");
+          opt.classList.add("selected");
+          setTimeout(function () {
+            step++;
+            if (step < QUESTIONS.length) renderQuestion(); else renderResult();
+          }, 220);
+        }
+        if (e.target.id === "back") { step--; renderQuestion(); }
+        if (e.target.id === "retake") { answers = []; step = 0; renderQuestion(); }
+      });
+
+      function score() {
+        var pts = {}, hairType = null;
+        answers.forEach(function (a, qi) {
+          var o = QUESTIONS[qi].options[a];
+          if (o.type) hairType = o.type;
+          Object.keys(o.pts).forEach(function (k) { pts[k] = (pts[k] || 0) + o.pts[k]; });
+        });
+        var ranked = HAIRX_PRODUCTS.map(function (p) {
+          var s = pts[p.concern] || 0;
+          if (hairType) s += p.hairTypes.indexOf(hairType) !== -1 ? 1 : -3;
+          // Curly hair with frizz goes to Curl Define; straighter hair to Smooth Tame.
+          if (p.id === "curl-define" && hairType === "curly") s += 1.5;
+          if (p.id === "smooth-tame" && hairType === "curly") s -= 0.5;
+          return { p: p, s: s };
+        }).sort(function (a, b) { return b.s - a.s || b.p.rating - a.p.rating; });
+        return { ranked: ranked, hairType: hairType };
+      }
+
+      function renderResult() {
+        var r = score(), top = r.ranked[0], p = top.p;
+        if (top.s <= 1) p = HAIRX_findProduct("daily-fresh"); // no strong concern → everyday formula
+        var pct = Math.min(98, Math.round(78 + top.s * 2));
+        var others = r.ranked.filter(function (x) { return x.p.id !== p.id && x.s > 0; }).slice(0, 2);
+        if (others.length < 2) others = others.concat(r.ranked.filter(function (x) { return x.p.id !== p.id && others.indexOf(x) === -1; }).slice(0, 2 - others.length));
+        var concern = HAIRX_CONCERNS[p.concern];
+
+        el.innerHTML =
+          '<div class="quiz-result">' +
+            '<span class="eyebrow">Your HAIRX match</span>' +
+            '<h2 class="quiz-q" style="margin-bottom:6px">Your colour is <span style="color:' + p.color + '">' + p.name + "</span></h2>" +
+            '<p class="muted">Based on your answers, your main concern is <b>' + concern.label.toLowerCase() + "</b>.</p>" +
+            '<div class="result-match" style="--accent:' + p.color + '">' +
+              HAIRX_bottle(p) +
+              "<div>" +
+                '<span class="match-pct">' + pct + "% MATCH</span>" +
+                "<h3>" + p.name + "</h3>" +
+                '<p class="muted">' + p.description + "</p>" +
+                '<p class="small"><b>Key ingredients:</b> ' + p.ingredients.map(function (i) { return i.name; }).join(", ") + "</p>" +
+                '<div class="price-row"><span class="price">' + HAIRX_formatINR(p.price) + '</span> <s class="muted">' + HAIRX_formatINR(p.mrp) + "</s></div>" +
+                '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-dark" data-add="' + p.id + '">Add to cart</button><a class="btn btn-outline" href="product.html?id=' + p.id + '">View details</a></div>' +
+              "</div>" +
+            "</div>" +
+            '<h4 style="text-align:left;font-size:1.3rem">Also good for you</h4>' +
+            '<div class="also-like">' + others.map(function (x) {
+              return '<a href="product.html?id=' + x.p.id + '">' + HAIRX_bottle(x.p) + "<div><b>" + x.p.name + '</b><br><span class="muted small">' + HAIRX_CONCERNS[x.p.concern].label + " · " + HAIRX_formatINR(x.p.price) + "</span></div></a>";
+            }).join("") + "</div>" +
+            '<p style="margin-top:28px"><button class="link-btn" id="retake" type="button">Retake the quiz</button></p>' +
+          "</div>";
+      }
+
+      renderQuestion();
+    })();
+  </script>
+</body>
+</html>
