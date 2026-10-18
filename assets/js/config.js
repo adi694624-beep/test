@@ -7,7 +7,7 @@ window.HAIRX_CONFIG = {
   tagline: "Rooted in Nature. Engineered for Men.",
 
   // Contact
-  email: "care@hairx.in",
+  email: "xyz@hairx.in",
   whatsapp: "919999999999",          // country code + number, digits only
   whatsappDisplay: "+91 99999 99999",
 
