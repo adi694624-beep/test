@@ -102,7 +102,7 @@
     var links = NAV.map(function (n) {
       return '<a href="' + n[0] + '"' + (n[0] === here ? ' aria-current="page"' : "") + ">" + n[1] + "</a>";
     }).join("");
-    return '<div class="announce">Free shipping above ' + window.HAIRX_formatINR(CFG.freeShippingAbove) + " · Cash on Delivery available · 100% natural formulas</div>" +
+    return '<div class="announce">Free shipping above ' + window.HAIRX_formatINR(CFG.freeShippingAbove) + " · Cash on Delivery available · Call / WhatsApp <a href=\"tel:" + CFG.phone + "\">" + CFG.whatsappDisplay + "</a></div>" +
       '<header class="site-header"><div class="container header-inner">' +
         '<button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>' +
         '<a class="logo" href="index.html">' + window.HAIRX_logo() + "</a>" +
