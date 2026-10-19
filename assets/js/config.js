@@ -8,8 +8,9 @@ window.HAIRX_CONFIG = {
 
   // Contact
   email: "xyz@hairx.in",
-  whatsapp: "919999999999",          // country code + number, digits only
-  whatsappDisplay: "+91 99999 99999",
+  phone: "+919871196099",            // used for "Call us" links
+  whatsapp: "919871196099",          // country code + number, digits only
+  whatsappDisplay: "+91 98711 96099",
 
   // Payments
   upiId: "hairx@upi",                // your UPI VPA, used for the UPI pay link + QR

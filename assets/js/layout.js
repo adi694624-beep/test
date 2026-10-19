@@ -130,6 +130,7 @@
       "</div></div>" +
       '<div><h4>Talk to us</h4><div class="footer-links">' +
         '<a href="mailto:' + CFG.email + '">' + CFG.email + "</a>" +
+        '<a href="tel:' + CFG.phone + '">Call ' + CFG.whatsappDisplay + "</a>" +
         '<a href="https://wa.me/' + CFG.whatsapp + '" target="_blank" rel="noopener">WhatsApp ' + CFG.whatsappDisplay + "</a>" +
       "</div>" +
       '<p class="small pay-note">We accept UPI · Cards · Net Banking · Cash on Delivery</p></div>' +
